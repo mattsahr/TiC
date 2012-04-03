@@ -9,13 +9,13 @@ __TiC__ (Touch-interface-Click) is a jQuery plugin for managing touch UI.
 
 TiC doesn't do anything visible. It passes click/touch events from DOM elements to functions.    Any DOM element with [ class="TiC" ] can be set up to fire touch events.  It also plays nicely in non-touch environments.
 
-__Fix Slow Clicks__ 
+__Fix Slow Clicks__   
 Touch screen web apps have, in a default browser, a slow click response.  Which makes your webpage/app feel sluggish and... non-appy.  TiC addresses this by using "touchstart" whenever possible, and using a faster version of "click" when necessary.  
 
-__Touchstart First__
+__Touchstart First__   
 TiC default behavior is to fire on "touchstart" in touch environments, and fall back to "click" events in a mouse environment.  But sometimes touchstart won't work because it happens too fast, is too sensitive.  The most common reason to avoid "touchstart" is that an element lives inside a scrollable area, in which case the user wants to __scroll__ but they end up also __clicking buttons__.  Which is bad.  There are other circumstances where "touchstart" is just too reactive.   
 
-__Fast Click Fallback__
+__Fast Click Fallback__   
 In cases where the "touchstart" event is too sensitive, an element can be set to "click" instead.  When an element is set for "click", but it lives in a touch environment, a "fastClick" approach is applied so that the the event happens faster than the regular, awful, slow click behavior.  The "fastClick" code is based on Assanka.net's [FastClick](http://assanka.net/content/tech/2011/08/26/fastclick-native-like-tapping-for-touch-apps/) and Matteo Spinelli's [NoClickDelay](http://cubiq.org/remove-onclick-delay-on-webkit-for-iphone).
 
 __Centralize UI Dispatch__   
@@ -25,11 +25,11 @@ Once you've got your "click" in hand as it were, there's still a question of org
 
 ### Dependencies  ###
 
-__jQuery 1.7 or later__ 
+__jQuery 1.7 or later__   
 The plugin uses the "on" event, so jQuery 1.7 or higher is necessary.
 
  
-__Tiny Pub/Sub__
+__Tiny Pub/Sub__  
 Ben Alman's "_Tiny Pub/Sub_" plugin is included with TiC.  However, it is quite possible to ignore the pub/sub pattern and use Tic with "direct" function calls.  This document covers the "direct" approach first.
 
 * * *
@@ -60,7 +60,7 @@ Multiple TiC setups can be used, each one called on a different wrapper div.  Al
 	    //  ...or... 
 	$("body").TiC();         // one TiC event handler for the body 
 
-__Do Not Nest__
+__Do Not Nest__   
 TiC is an event handler based on jQuery's "on" delegation.  It does not prevent event bubbling within the TiC wrapper -- does not, for instance, call __event.preventDefault();__  in any useful, per-DOM-element way.  Since TiC events bubble, you don't want to nest TiC calls, as it can end up firing events twice (or more).  In other words, if your html looks like this, it will be troublesome...
 
 	<div id="wrapperDiv">
@@ -73,12 +73,12 @@ TiC is an event handler based on jQuery's "on" delegation.  It does not prevent 
 		$("#wrapperInside").TiC();  // This call is nested!  Bad!
 	</script>
 
-__Click Option: Wrapper-wide fast-click__
+__Click Option: Wrapper-wide fast-click__   
 In some cases (such as inside a touch-scrolling div) you will want to set up TiC to handle all wrapped events as fast-clicks.
 
 	$("#scrollingDiv").TiC("click");
 
-__Click Option: individual DOM element fast-click__
+__Click Option: individual DOM element fast-click__   
 If your wrapper is set up in "normal" mode (preference for "touchstart" event), you can assign individual DOM elements to use the fast-click.
 
 	<div id="wrapperDiv">
@@ -97,7 +97,7 @@ In an environment where you're using the "body" single TiC event handler, you co
 
 	$(".scrollingDiv .TiC").data({"ticTc":"click"});
 
-__Click Option:  I REALLY just want a regular, slow click.__
+__Click Option:  I REALLY just want a regular, slow click.__   
 In the case where fast clicks and touchstart is problematic, you can use the "TiClick" class for DOM elements, in place of the "TiC" class.  To use "TiClick", you call Tic with an extra argument of "slowClick."
 
 	<div id="wrapperDiv">
@@ -132,13 +132,13 @@ Once TiC is called, the webpage is listening for events on any element with a cl
 		</div>
 	</div>
 
-__HTML5 data gotchas__
+__HTML5 data gotchas__   
 Working with HTML5 data has a few peculiarities.  You can only use lower case in your HTML5 "data" keys, and the safe separator is a hyphen _when it's written out in the DOM_.  But when you manipulate DOM data in javascript, it becomes camelCase without hyphens.  In the above html example, you could add [data-tic-action="myFunction"] via jQuery.  If you do, it is useful to note the quirk where hyphens change to camelCase.
 
 	$("#myDiv").data({ "tic-action" : "myFunction" });  // FAILURE (hyphen)
 	$("#myDiv").data({ "ticAction"  : "myFunction" });  // CORRECT (camelCase)
 
-__Available Options__
+__Available Options__   
 You can set an individual DOM element to use click or touchstart, and you can pass up to 6 arguments to a called function (a "target" argument, and then "arg1" to "arg5").  
 
 Why only 6 arguments?  I dunno, I ran out of interest in solving the infinite-arguments problem.  I stopped at 6. This systems lets you easily be specific about passing null arguments mixed with regular arguments.
@@ -181,7 +181,7 @@ You don't need jQuery to set up DOM elements.  The same TiC options can be writt
 		$("#wrapperDiv").TiC();
 	</script>
 
-__Deeply Nested Functions, and This-ness__
+__Deeply Nested Functions, and This-ness__   
 TiC is pretty good about finding the right function called by [data-tic-action].   If you have deeply nested functions, you can use dot notation to reference them...
 
 	<div class="TiC" data-tic-action="deeply.nested.object.contains.myFunction">
@@ -321,7 +321,7 @@ Inside the TiC module, you will find this "router" function.
 
 The idea is that you can overwrite this router, and add your own handlers to the "switch" list.  Note that the router's default is to "publish" an action.
 
-__Handle DOM "this" actions, _and then_ publish an event__
+__Handle DOM "this" actions, _and then_ publish an event__   
 If you want to call a custom function and THEN publish to a channel, that works too.  One reason to do this is that the pub/sub method does not maintain a "this" reference to your dom element, so you might find a situation where you want a dom-specific change, but you also want to maintain inter-module pub/sub communication.  To do both, you can write a "case" for your action, put it immediatly above the "default" case, and purposefully not include a "break" statement.  In this fashion, your handler will fire, and the action will also get published.  It would look like this:
 
 	router: function(){
