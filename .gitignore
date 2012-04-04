@@ -1,0 +1,13 @@
+# gitignore created 3 April 2012 #
+##################################
+index.html
+no_include/
+jquery-1.7.2.min.js
+.project
+
+*.project
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
