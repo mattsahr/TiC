@@ -1,9 +1,7 @@
-# TiC
-********************* 
+# TiC.js
+A jQuery plugin for managing touch UI.   
 
-__TiC__ (Touch-interface-Click) is a jQuery plugin for managing touch UI.   
-Copyright 2012, Matt Sahr.  Dual licensed under MIT and GPLv2     
-Demo Page: [TiC.demo-look.info](http://tic.demo-look.info)
+[DEMO](http://tic.demo-look.info)
 	
 	<div id="wrapperDiv">
 		<div class="TiC" data-tic-action="myFunction">Tap me!</div>
@@ -106,7 +104,7 @@ In an environment where you're using the "body" single TiC event handler, you co
 	$(".scrollingDiv .TiC").data({"ticTc":"click"});
 
 __Click Option:  I REALLY just want a regular, slow click.__   
-In the case where fast clicks and touchstart is problematic, you can use the "TiClick" class for DOM elements, in place of the "TiC" class.  To use "TiClick", you call Tic with an extra argument of "slowClick."
+In the case where fast clicks and touchstart is problematic, you can use the "TiClick" class for DOM elements, in place of the "TiC" class.  To use "TiClick", you call TiC with an extra argument of "slowClick."
 
 	<div id="wrapperDiv">
 		<div class="TiC" data-tic-action="myFunction">
@@ -126,9 +124,27 @@ In the case where fast clicks and touchstart is problematic, you can use the "Ti
 	
 Note: Don't use both classes on a div: (__class="TiC TiClick"__) unless you want the function call to happen twice.
 
+### Click Options: summary
+
+	$("#wrapperDiv").TiC('click');
+	Wrapper asks for click                 ---> fast click
+
+	<div class="TiC" data-tic-tc="click">
+	The DOM element asks for click         ---> fast click
+
+    If the browser doesn't do touch        ---> slow click
+
+	$("#wrapperDiv").TiC(null,'slowClick');
+	<div classs="TiClick">
+    The wrapper asks for slowClick
+	The DOM element is classed "TiClick"   ---> slow click
+
+	Default behavior                       ---> touchstart
+
+
 ****************
 
-## html "data" controls function calls and arguments ##
+## Dispatcher:  HTML5 data controls  ##
 Once TiC is called, the webpage is listening for events on any element with a classes of "TiC" and "TiClick".  You can now build different function behavior into different elements.  
 
 	<div id="wrapperDiv">
@@ -413,7 +429,5 @@ I know I could build and pass along a more flexible argument hash like...
 But this requires a rather specific argument structure for the target "myFunction()" and it's not a structure that I think many coders would want to use...  I personally don't use hash data in my arguments.  Does anybody?
 
 ***************
-  
->>>>>>> 
-
+Copyright 2012, Matt Sahr.  Dual licensed under MIT and GPLv2     
 ***************
