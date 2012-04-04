@@ -16,16 +16,18 @@ Demo Page: [TiC.demo-look.info](http://tic.demo-look.info)
 TiC passes click/touch events from DOM elements to functions.    Any DOM element with [ class="TiC" ] can be set up to fire touch events.  It also plays nicely in non-touch environments.
 
 __Fix Slow Clicks__   
-Touch screen web apps have, in a default browser, a slow click response.  Which makes your webpage/app feel sluggish and... non-appy.  TiC addresses this by using "touchstart" whenever possible, and using a faster version of "click" when necessary.  
+Touch screen browsers by default provide a slow click response, which makes your webpage/app feel sluggish and... non-appy.  TiC speeds this up.
 
 __Touchstart First__   
-TiC default behavior is to fire on "touchstart" in touch environments, and fall back to "click" events in a mouse environment.  But sometimes touchstart won't work because it happens too fast, is too sensitive.  The most common reason to avoid "touchstart" is that an element lives inside a scrollable area, in which case the user wants to __scroll__ but they end up also __clicking buttons__.  Which is bad.  There are other circumstances where "touchstart" is just too reactive.   
+TiC default behavior is to fire on "touchstart" in touch environments, fall back to fast-click behavior where necessary, and fall further back to "click" events in a mouse environment.  Touchstart is the snappiest, fastest UI, but sometimes it it happens _too_ fast, is too sensitive or aggressive.   
+
+The most common reason to avoid "touchstart" is that an element lives inside a scrollable area, in which case the user wants to __scroll__ but they end up also __clicking buttons__.  There are other circumstances where "touchstart" might be just too reactive.   
 
 __Fast Click Fallback__   
-In cases where the "touchstart" event is too sensitive, an element can be set to "click" instead.  When an element is set for "click", but it lives in a touch environment, a "fastClick" approach is applied so that the the event happens faster than the regular, awful, slow click behavior.  The "fastClick" code is based on Assanka.net's [FastClick](http://assanka.net/content/tech/2011/08/26/fastclick-native-like-tapping-for-touch-apps/) and Matteo Spinelli's [NoClickDelay](http://cubiq.org/remove-onclick-delay-on-webkit-for-iphone).
+In cases where the "touchstart" event is too much, an element can be set to "click" instead.  When an element is set for "click", but it lives in a touch environment, a "fastClick" approach is applied so that the the event happens faster than the regular, awful, slow click behavior.  The "fastClick" code is based on Assanka.net's [FastClick](http://assanka.net/content/tech/2011/08/26/fastclick-native-like-tapping-for-touch-apps/) and Matteo Spinelli's [NoClickDelay](http://cubiq.org/remove-onclick-delay-on-webkit-for-iphone).
 
 __Centralize UI Dispatch__   
-Once you've got your "click" in hand as it were, there's still a question of organization.  Larger apps get chaotic without a centralized dispatch.  TiC is a fairly flexible, standardized way to call functions.  All the UI details are stored on the DOM element as [ data ] declarations.  
+Once you've got your "click" in hand as it were, there's still a question of organization.  Larger apps can get chaotic without a centralized dispatch.  Or so I've heard.  TiC is a fairly flexible, standardized way to call functions.  All the UI details are stored on the DOM element as [ data ] declarations.  
 
 **************************
 
