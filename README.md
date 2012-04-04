@@ -1,13 +1,19 @@
 # TiC
 ********************* 
 
-__TiC__ (Touch-interface-Click) is a jQuery plugin for managing touch UI.  
+__TiC__ (Touch-interface-Click) is a jQuery plugin for managing touch UI.   
+Copyright 2012, Matt Sahr.  Dual licensed under MIT and GPLv2     
+Demo Page: [TiC.demo-look.info](http://tic.demo-look.info)
+	
+	<div id="wrapperDiv">
+		<div class="TiC" data-tic-action="myFunction">Tap me!</div>
+		<div class="TiC" data-tic-action="otherFunction">Tap me!</div>
+	</div>
+	<script type="text/javascript">
+			$('#wrapperDiv').TiC();			
+	</script>
 
-	<div class="TiC" data-tic-action="myFunction"> 
-	---> touch event 
-		---> function call.
-
-TiC doesn't do anything visible. It passes click/touch events from DOM elements to functions.    Any DOM element with [ class="TiC" ] can be set up to fire touch events.  It also plays nicely in non-touch environments.
+TiC passes click/touch events from DOM elements to functions.    Any DOM element with [ class="TiC" ] can be set up to fire touch events.  It also plays nicely in non-touch environments.
 
 __Fix Slow Clicks__   
 Touch screen web apps have, in a default browser, a slow click response.  Which makes your webpage/app feel sluggish and... non-appy.  TiC addresses this by using "touchstart" whenever possible, and using a faster version of "click" when necessary.  
