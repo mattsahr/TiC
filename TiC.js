@@ -316,7 +316,6 @@ var TiC = function(){
 											e.data.func.apply(this,args);
 										}
 										// alert('touch context, CLICK');
-										func.apply(this,args);
 									}
 								}
 							);
